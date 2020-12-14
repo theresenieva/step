@@ -16,23 +16,23 @@
  * Adds a random greeting to the page.
  */
 function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!', 'YareYare'];
+    const greetings =
+        ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!', 'YareYare'];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+    // Pick a random greeting.
+    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+    // Add it to the page.
+    const greetingContainer = document.getElementById('greeting-container');
+    greetingContainer.innerText = greeting;
 }
 
 /** 
- * Adds a random fact about me to the page
+ * Adds a random fact about me to the page.
  */
 function addRandomFact() {
     const facts = 
-    ['I really like mangoes', 'I lived in Singapore for 10 years', 'I am left handed'];
+        ['I really like mangoes', 'I lived in Singapore for 10 years', 'I am left handed'];
 
     const fact = facts[Math.floor(Math.random() * facts.length)];
 
@@ -41,7 +41,7 @@ function addRandomFact() {
 }
 
 function getHelloResponse() {
-  fetch('/data').then(response => response.text()).then((quote) => {
-    document.getElementById('response-container').innerText = quote;
-  });
+    fetch('/data').then(response => response.text()).then((quote) => {
+        document.getElementById('response-container').innerText = quote;
+    });
 }
