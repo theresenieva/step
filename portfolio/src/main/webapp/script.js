@@ -16,58 +16,58 @@
  * Adds a random greeting to the page.
  */
 function addRandomGreeting() {
-    const greetings =
-        ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!', 'YareYare'];
+  const greetings =
+    ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!', 'YareYare'];
 
-    // Pick a random greeting.
-    const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  // Pick a random greeting.
+  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
-    // Add it to the page.
-    const greetingContainer = document.getElementById('greeting-container');
-    greetingContainer.innerText = greeting;
+  // Add it to the page.
+  const greetingContainer = document.getElementById('greeting-container');
+  greetingContainer.innerText = greeting;
 }
 
 /** 
  * Adds a random fact about me to the page.
  */
 function addRandomFact() {
-    const facts = 
-        ['I really like mangoes', 'I lived in Singapore for 10 years', 'I am left handed'];
+  const facts = 
+    ['I really like mangoes', 'I lived in Singapore for 10 years', 'I am left handed'];
 
-    const fact = facts[Math.floor(Math.random() * facts.length)];
+  const fact = facts[Math.floor(Math.random() * facts.length)];
 
-    const factContainer = document.getElementById('fact-container');
-    factContainer.innerText = fact;
+  const factContainer = document.getElementById('fact-container');
+  factContainer.innerText = fact;
 }
 
 /**
  * Adds server response to the DOM.
  */
 function getHelloResponse() {
-    fetch('/data').then(response => response.text()).then((quote) => {
-        document.getElementById('response-container').innerText = quote;
-    });
+  fetch('/data').then(response => response.text()).then((quote) => {
+    document.getElementById('response-container').innerText = quote;
+  });
 }
 
 function getJson() {
-    fetch('/data').then(response => response.text()).then((message) => console.log(message));
+  fetch('/data').then(response => response.text()).then((message) => console.log(message));
 
-    // Add hard-coded comments to the page
-    fetch('/data').then(response => response.json()).then((m) => {
-        const statsListElement = document.getElementById('messages-container');
-        statsListElement.innerHTML = '';
-        statsListElement.appendChild(
-            createListElement('Comment 1: ' + m.Messages[0]));
-        statsListElement.appendChild(
-            createListElement('Comment 2: ' + m.Messages[1]));
-        statsListElement.appendChild(
-            createListElement('Comment 3: ' + m.Messages[2]));
-    });
+  // Add hard-coded comments to the page
+  fetch('/data').then(response => response.json()).then((m) => {
+    const statsListElement = document.getElementById('messages-container');
+    statsListElement.innerHTML = '';
+    statsListElement.appendChild(
+      createListElement('Comment 1: ' + m.Messages[0]));
+    statsListElement.appendChild(
+      createListElement('Comment 2: ' + m.Messages[1]));
+    statsListElement.appendChild(
+      createListElement('Comment 3: ' + m.Messages[2]));
+  });
 }
 
 /** Creates an <li> element containing text. */
 function createListElement(text) {
-    const liElement = document.createElement('li');
-    liElement.innerText = text;
-    return liElement;
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
