@@ -48,3 +48,31 @@ function getHelloResponse() {
     document.getElementById('response-container').innerText = quote;
   });
 }
+
+/**
+ * Fetches comment data and displays to the portfolio page.
+ */
+function getJson() {
+  fetch('/data').then(response => response.text()).then((message) => console.log(message));
+
+  // Add hard-coded comments to the page
+  fetch('/data').then(response => response.json()).then((m) => {
+    const statsListElement = document.getElementById('messages-container');
+    statsListElement.innerHTML = '';
+    statsListElement.appendChild(
+      createListElement('Comment 1: ' + m.Messages[0]));
+    statsListElement.appendChild(
+      createListElement('Comment 2: ' + m.Messages[1]));
+    statsListElement.appendChild(
+      createListElement('Comment 3: ' + m.Messages[2]));
+  });
+}
+
+/**
+ * Creates an <li> element containing text.
+ */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}

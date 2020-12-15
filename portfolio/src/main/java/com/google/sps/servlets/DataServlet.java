@@ -15,6 +15,9 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.ArrayList;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,9 +26,31 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("Hello Therese! (woah a greeting appeared)");
-  }
+
+    private ArrayList<String> messages = new ArrayList<String>(Arrays.asList("Grape", "Apple", "Orange"));
+
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        String json = convertMessagesToJson();
+
+        // Send the JSON as the response
+        response.setContentType("application/json;");
+        response.getWriter().println(json);
+    }
+
+    /** Converts messages to Json */
+    private String convertMessagesToJson() {
+        String json = "{";
+        json += "\"Messages\": ";
+        json += "[ ";
+        json += "\"" + messages.get(0) + "\"";
+        json += ", ";
+        json += "\"" + messages.get(1) + "\"";
+        json += ", ";
+        json += "\"" + messages.get(2) + "\"";
+        json += "]";
+        json += "}";
+        return json;
+    }
 }

@@ -3,7 +3,7 @@
   margin-right: auto;
   width: 650px;
 }
-
+ 
 body {
     background-color: azure;
 }
@@ -20,7 +20,7 @@ h2 {
 }
 
 p {
-    background: linear-gradient(to bottom, white, #FF8C00);
+    background: linear-gradient(to bottom, white, orange);
 }
 
 button {
