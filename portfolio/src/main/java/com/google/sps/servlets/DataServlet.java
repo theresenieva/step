@@ -27,24 +27,16 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    private ArrayList<String> messages = new ArrayList<String>();
+    private ArrayList<String> messages = new ArrayList<String>(Arrays.asList("Grape", "Apple", "Orange"));
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        addMessages();
         String json = convertMessagesToJson();
 
         // Send the JSON as the response
         response.setContentType("application/json;");
         response.getWriter().println(json);
-    }
-
-    /** Adds hard-coded messages */
-    private void addMessages() {
-        messages.add("Grape");
-        messages.add("Apple");
-        messages.add("Orange");
     }
 
     /** Converts messages to Json */
