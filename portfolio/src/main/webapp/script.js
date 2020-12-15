@@ -48,3 +48,7 @@ function getHelloResponse() {
         document.getElementById('response-container').innerText = quote;
     });
 }
+
+function getJson() {
+    fetch('/data').then(response => response.text()).then(jsonMessage => console.log(jsonMessage));
+}
