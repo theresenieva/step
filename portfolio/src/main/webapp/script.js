@@ -49,6 +49,9 @@ function getHelloResponse() {
   });
 }
 
+/**
+ * Fetches comment data and displays to the portfolio page.
+ */
 function getJson() {
   fetch('/data').then(response => response.text()).then((message) => console.log(message));
 
@@ -65,7 +68,9 @@ function getJson() {
   });
 }
 
-/** Creates an <li> element containing text. */
+/**
+ * Creates an <li> element containing text.
+ */
 function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
