@@ -45,9 +45,9 @@ public class DataServlet extends HttpServlet {
 
     /** Adds hard-coded messages */
     private void addMessages() {
-        messages.add("Message1");
-        messages.add("Message2");
-        messages.add("Message3");
+        messages.add("Grape");
+        messages.add("Apple");
+        messages.add("Orange");
     }
 
     /** Converts messages to Json */
