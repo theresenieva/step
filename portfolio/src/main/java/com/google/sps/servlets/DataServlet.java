@@ -39,6 +39,22 @@ public class DataServlet extends HttpServlet {
         response.getWriter().println(json);
     }
 
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Get the input from the form.
+        String text = getParameter(request, "text-input", "");
+        boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
+      
+        // Convert the text to upper case.
+        if (upperCase) {
+            text = text.toUpperCase();
+        }
+
+        // Respond with the result.
+        response.setContentType("text/html;");
+        response.getWriter().println(text);
+    }
+
     /** Converts messages to Json */
     private String convertMessagesToJson() {
         String json = "{";
@@ -52,5 +68,17 @@ public class DataServlet extends HttpServlet {
         json += "]";
         json += "}";
         return json;
+    }
+
+    /**
+     * @return the request parameter, or the default value if the parameter
+     *         was not specified by the client
+     */
+    private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+        String value = request.getParameter(name);
+        if (value == null) {
+        return defaultValue;
+        }
+        return value;
     }
 }
