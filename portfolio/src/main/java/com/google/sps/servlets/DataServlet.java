@@ -33,8 +33,6 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    private ArrayList<String> messages = new ArrayList<String>();
-
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -42,12 +40,13 @@ public class DataServlet extends HttpServlet {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
         
+        ArrayList<String> messages = new ArrayList<String>();
         for (Entity entity : results.asIterable()) {
             String text =  (String) entity.getProperty("text");
             messages.add(text);
         }
 
-        String json = convertMessagesToJson();
+        String json = convertMessagesToJson(messages);
 
         // Send the JSON as the response
         response.setContentType("application/json;");
@@ -74,7 +73,7 @@ public class DataServlet extends HttpServlet {
     }
 
     /** Converts messages to Json */
-    private String convertMessagesToJson() {
+    private String convertMessagesToJson(ArrayList<String> messages) {
         String json = "{";
         json += "\"Messages\": ";
         json += "[ ";
@@ -97,7 +96,7 @@ public class DataServlet extends HttpServlet {
     private String getParameter(HttpServletRequest request, String name, String defaultValue) {
         String value = request.getParameter(name);
         if (value == null) {
-        return defaultValue;
+            return defaultValue;
         }
         return value;
     }
