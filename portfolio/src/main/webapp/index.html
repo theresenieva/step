@@ -8,44 +8,58 @@
   </head>
   <body>
     <div id="content">
-        <h1> Therese Nieva's Portfolio </h1>
+      <h1> Therese Nieva's Portfolio </h1>
 
-        <h2> Who am I? </h2>
-        <p> I am a Software Engineering student studying at the 
-            University of Queensland. For summer 2020, I am interning at Google Sydney on 
-            the Chrome OS team as a STEP intern. 
-            I enjoy watching shows and creating art in my free time.</p>
+      <h2> Who am I? </h2>
+      <p> I am a Software Engineering student studying at the 
+      University of Queensland. For summer 2020, I am interning at Google Sydney on 
+      the Chrome OS team as a STEP intern. 
+      I enjoy watching shows and creating art in my free time.</p>
 
-        <p>Click here to get a random fact about me:</p>
-        <button onclick="addRandomFact()">Get Fact :)</button><br/>
-        <div id="fact-container"></div>
+      <p>Click here to get a random fact about me:</p>
+      <button onclick="addRandomFact()">Get Fact :)</button><br/>
+      <div id="fact-container"></div>
 
-        <p>Click here to see the something happen:</p>
-        <button onclick="getHelloResponse()">Click here!</button><br/>
-        <div id="response-container"></div>
+      <p>Click here to see the something happen:</p>
+      <button onclick="getHelloResponse()">Click here!</button><br/>
+      <div id="response-container"></div>
 
-        <h2> Links </h2>
-        <a href="https://au.linkedin.com/in/therese-nieva-b03056179">My LinkedIn (connect with me plez)!</a><br/>
-        <a href="https://github.com/theresenieva">My GitHub!</a>
+      <h2> Links </h2>
+      <a href="https://au.linkedin.com/in/therese-nieva-b03056179">My LinkedIn (connect with me plez)!</a><br/>
+      <a href="https://github.com/theresenieva">My GitHub!</a>
     
-        <h2> Random Images </h2>
-        <p> This is me</p>
-        <img src="images/1582491760909.jpg"/>
+      <h2> Random Images </h2>
+      <p> This is me</p>
+      <img src="images/1582491760909.jpg"/>
 
-        <h2> Why I like photography</h2>
-        <p> I thought it was a bit funny that the walkthrough specified photography in particular. 
-            I can appreciate a good photo and the skills required to take one. 
-            While I wouldn't say that photography is a hobby of mine, I am following quite a few photography accounts on Instagram.
-            I would love to get more into photography in the future! 
-            It would be fun to take beautiful pictures of the places I travel to. </p>
+      <h2> Why I like photography</h2>
+      <p> I thought it was a bit funny that the walkthrough specified photography in particular. 
+      I can appreciate a good photo and the skills required to take one. 
+      While I wouldn't say that photography is a hobby of mine, I am following quite a few photography accounts on Instagram.
+      I would love to get more into photography in the future! 
+      It would be fun to take beautiful pictures of the places I travel to. </p>
 
-        <h2> Explain my hidden talent </h2>
-        <p> Well... if I explained my hidden talent, it wouldn't be hidden anymore haha. </p>
+      <h2> Explain my hidden talent </h2>
+      <p> Well... if I explained my hidden talent, it wouldn't be hidden anymore haha. </p>
         
-        <h2> Comments Section </h2>
-        <p>Click here to see some messages:</p>
-        <button onclick="getJson()">Click here (no.2)!</button><br/>
-        <ul id="messages-container"></ul>
+      <h2> Comments Section </h2>
+
+        <form action="/text" method="POST">
+
+          <p>Enter comment:</p>
+          <textarea name="text-input"></textarea>
+          <br/><br/>
+
+          <p>Upper case?</p>
+          <input type="checkbox" name="upper-case" value="true"> Upper-case
+          <br/><br/>
+
+          <input type="submit" />
+        </form>
+
+      <p>Click here to see some messages:</p>
+      <button onclick="getJson()">Click here (no.2)!</button><br/>
+      <ul id="messages-container"></ul>
     </div>
   </body>
 </html>
