@@ -60,13 +60,15 @@ public class DataServlet extends HttpServlet {
         String json = "{";
         json += "\"Messages\": ";
         json += "[ ";
-        json += "\"" + messages.get(0) + "\"";
-        json += ", ";
-        json += "\"" + messages.get(1) + "\"";
-        json += ", ";
-        json += "\"" + messages.get(2) + "\"";
+
+        for (int i = 0; i < messages.size(); i++) {
+            json += "\"" + messages.get(i) + "\"";
+            if (i < messages.size() - 1) {
+                json += ", ";
+            }
+        }
         json += "]";
-        json += "}";
+        json += "}";      
         return json;
     }
 
