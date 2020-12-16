@@ -50,7 +50,7 @@ public class DataServlet extends HttpServlet {
             text = text.toUpperCase();
         }
 
-        messages.add(text);
+        // messages.add(text);
         response.sendRedirect("/index.html");
     }
 
