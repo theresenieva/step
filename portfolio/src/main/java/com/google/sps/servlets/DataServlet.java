@@ -50,11 +50,8 @@ public class DataServlet extends HttpServlet {
             text = text.toUpperCase();
         }
 
-        // Respond with the result.
-        //response.setContentType("text/html;");
-        //response.getWriter().println(text);
-
         messages.add(text);
+        response.sendRedirect("/index.html");
     }
 
     /** Converts messages to Json */
