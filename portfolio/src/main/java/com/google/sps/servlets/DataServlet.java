@@ -51,8 +51,10 @@ public class DataServlet extends HttpServlet {
         }
 
         // Respond with the result.
-        response.setContentType("text/html;");
-        response.getWriter().println(text);
+        //response.setContentType("text/html;");
+        //response.getWriter().println(text);
+
+        messages.add(text);
     }
 
     /** Converts messages to Json */
