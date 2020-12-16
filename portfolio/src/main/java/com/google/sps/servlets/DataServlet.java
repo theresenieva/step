@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    private ArrayList<String> messages = new ArrayList<String>(Arrays.asList("Grape", "Apple", "Orange"));
+    private ArrayList<String> messages = new ArrayList<String>();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -39,18 +39,47 @@ public class DataServlet extends HttpServlet {
         response.getWriter().println(json);
     }
 
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        // Get the input from the form.
+        String text = getParameter(request, "text-input", "");
+        boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
+      
+        // Convert the text to upper case.
+        if (upperCase) {
+            text = text.toUpperCase();
+        }
+
+        messages.add(text);
+        response.sendRedirect("/index.html");
+    }
+
     /** Converts messages to Json */
     private String convertMessagesToJson() {
         String json = "{";
         json += "\"Messages\": ";
         json += "[ ";
-        json += "\"" + messages.get(0) + "\"";
-        json += ", ";
-        json += "\"" + messages.get(1) + "\"";
-        json += ", ";
-        json += "\"" + messages.get(2) + "\"";
+
+        for (int i = 0; i < messages.size(); i++) {
+            json += "\"" + messages.get(i) + "\"";
+            if (i < messages.size() - 1) {
+                json += ", ";
+            }
+        }
         json += "]";
-        json += "}";
+        json += "}";      
         return json;
+    }
+
+    /**
+     * @return the request parameter, or the default value if the parameter
+     *         was not specified by the client
+     */
+    private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+        String value = request.getParameter(name);
+        if (value == null) {
+        return defaultValue;
+        }
+        return value;
     }
 }
