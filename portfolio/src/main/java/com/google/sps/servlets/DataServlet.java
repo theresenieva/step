@@ -25,17 +25,28 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-    private ArrayList<String> messages = new ArrayList<String>();
-
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        String json = convertMessagesToJson();
+        Query query = new Query("Comment");
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery results = datastore.prepare(query);
+        
+        ArrayList<String> messages = new ArrayList<String>();
+        for (Entity entity : results.asIterable()) {
+            String text = (String) entity.getProperty("text");
+            messages.add(text);
+        }
+
+        String json = convertMessagesToJson(messages);
 
         // Send the JSON as the response
         response.setContentType("application/json;");
@@ -62,7 +73,7 @@ public class DataServlet extends HttpServlet {
     }
 
     /** Converts messages to Json */
-    private String convertMessagesToJson() {
+    private String convertMessagesToJson(ArrayList<String> messages) {
         String json = "{";
         json += "\"Messages\": ";
         json += "[ ";
@@ -85,7 +96,7 @@ public class DataServlet extends HttpServlet {
     private String getParameter(HttpServletRequest request, String name, String defaultValue) {
         String value = request.getParameter(name);
         if (value == null) {
-        return defaultValue;
+            return defaultValue;
         }
         return value;
     }
