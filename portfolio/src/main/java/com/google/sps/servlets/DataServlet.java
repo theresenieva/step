@@ -39,11 +39,18 @@ public class DataServlet extends HttpServlet {
         Query query = new Query("Comment");
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
-  
+
+        int limit = getCommentLimit(request);
+        int count = 0;
+        
         ArrayList<String> messages = new ArrayList<String>();
         for (Entity entity : results.asIterable()) {
             String text = (String) entity.getProperty("text");
             messages.add(text);
+            count++;
+            if (count == limit) {
+                break;
+            }
         }
 
         String json = convertMessagesToJson(messages);
@@ -103,10 +110,11 @@ public class DataServlet extends HttpServlet {
     }
 
     /** 
-     * Parses the query string to get the value for the comment limit
+     * Get comment limit from query string
      */
     private int getCommentLimit(HttpServletRequest request) {
         String queryString = request.getQueryString();
+
         String[] parts = queryString.split("=");
         return Integer.parseInt(parts[1]);
     }
