@@ -22,6 +22,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -50,7 +53,11 @@ public class DataServlet extends HttpServlet {
             text = text.toUpperCase();
         }
 
-        messages.add(text);
+        Entity commentEntity = new Entity("Comment");
+        commentEntity.setProperty("text", text);
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        datastore.put(commentEntity);
+
         response.sendRedirect("/index.html");
     }
 
