@@ -53,10 +53,11 @@ function getHelloResponse() {
  * Fetches comment data and displays to the portfolio page.
  */
 function getJson() {
-  fetch('/data?limit=3').then(response => response.text()).then((message) => console.log(message));
+  var m = document.getElementById("limit").value;
+  fetch(('/data?limit=').concat(m)).then(response => response.text()).then((message) => console.log(message));
 
   // Add comments to the page
-  fetch('/data?limit=3').then(response => response.json()).then((m) => {
+  fetch(('/data?limit=').concat(m)).then(response => response.json()).then((m) => {
     const statsListElement = document.getElementById('messages-container');
     statsListElement.innerHTML = '';
 
