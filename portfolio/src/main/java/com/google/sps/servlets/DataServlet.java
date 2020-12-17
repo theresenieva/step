@@ -42,7 +42,7 @@ public class DataServlet extends HttpServlet {
         
         ArrayList<String> messages = new ArrayList<String>();
         for (Entity entity : results.asIterable()) {
-            String text =  (String) entity.getProperty("text");
+            String text = (String) entity.getProperty("text");
             messages.add(text);
         }
 
