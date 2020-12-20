@@ -75,3 +75,12 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+/**
+ * Delete data from datastore and remove deleted comments from page.
+ */
+function deleteComments() {
+  fetch('/delete-data', {
+    method: 'POST'
+  }).then(getJson());
+}
