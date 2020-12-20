@@ -16,6 +16,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 
 @WebServlet("/delete-data")
+/** Servlet for deleting comments */
 public class DeleteDataServlet extends HttpServlet {
 
     @Override
