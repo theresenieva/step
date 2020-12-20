@@ -17,5 +17,20 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 
 @WebServlet("/delete-data")
 public class DeleteDataServlet extends HttpServlet {
-    
+
+    @Override
+    public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        Query query = new Query("Comment");
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        PreparedQuery results = datastore.prepare(query);
+
+        for (Entity entity : results.asIterable()) {
+            datastore.delete(entity.getKey());
+        }
+
+        // Send empty reponse
+        response.setContentType("application/json;");
+        response.getWriter().println("");
+    }
 }
