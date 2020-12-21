@@ -53,10 +53,11 @@ function getHelloResponse() {
  * Fetches comment data and displays to the portfolio page.
  */
 function getJson() {
-  fetch('/data').then(response => response.text()).then((message) => console.log(message));
+  var limit = document.getElementById("limit").value;
+  fetch(('/data?limit=').concat(limit)).then(response => response.text()).then((message) => console.log(message));
 
   // Add comments to the page
-  fetch('/data').then(response => response.json()).then((m) => {
+  fetch(('/data?limit=').concat(limit)).then(response => response.json()).then((m) => {
     const statsListElement = document.getElementById('messages-container');
     statsListElement.innerHTML = '';
 
@@ -73,4 +74,13 @@ function createListElement(text) {
   const liElement = document.createElement('li');
   liElement.innerText = text;
   return liElement;
+}
+
+/**
+ * Delete data from datastore and remove deleted comments from page.
+ */
+function deleteComments() {
+  fetch('/delete-data', {
+    method: 'POST'
+  }).then(getJson());
 }

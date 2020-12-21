@@ -57,9 +57,23 @@
           <input type="submit" />
         </form>
 
-      <p>Click here to see some messages:</p>
-      <button onclick="getJson()">Click here (no.2)!</button><br/>
+      <p> How many comments to display: </p>
+      <form action="/data" method="GET">
+        <select id="limit" name="limit" onchange="getJson()">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select>
+      </form>
+
+      <p>Comments:</p>
       <ul id="messages-container"></ul>
+
+      <p>Delete Comments</p>
+      <button onclick="deleteComments()">Delete</button><br/>
+
     </div>
   </body>
 </html>

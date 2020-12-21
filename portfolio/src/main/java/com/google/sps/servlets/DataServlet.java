@@ -35,15 +35,19 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         Query query = new Query("Comment");
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
-        
+
+        int limit = getCommentLimit(request);
         ArrayList<String> messages = new ArrayList<String>();
         for (Entity entity : results.asIterable()) {
             String text = (String) entity.getProperty("text");
             messages.add(text);
+            limit--;
+            if (limit == 0) {
+                break;
+            }
         }
 
         String json = convertMessagesToJson(messages);
@@ -99,5 +103,15 @@ public class DataServlet extends HttpServlet {
             return defaultValue;
         }
         return value;
+    }
+
+    /** 
+     * Get comment limit from query string
+     */
+    private int getCommentLimit(HttpServletRequest request) {
+        String queryString = request.getQueryString();
+
+        String[] parts = queryString.split("=");
+        return Integer.parseInt(parts[1]);
     }
 }
