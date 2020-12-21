@@ -35,20 +35,17 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
         Query query = new Query("Comment");
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
         int limit = getCommentLimit(request);
-        int count = 0;
-        
         ArrayList<String> messages = new ArrayList<String>();
         for (Entity entity : results.asIterable()) {
             String text = (String) entity.getProperty("text");
             messages.add(text);
-            count++;
-            if (count == limit) {
+            limit--;
+            if (limit == 0) {
                 break;
             }
         }
