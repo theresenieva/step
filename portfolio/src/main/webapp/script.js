@@ -12,6 +12,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+/** Creates a chart and adds it to the page. */
+function drawChart() {
+  var data = new google.visualization.DataTable();
+  data.addColumn('string', 'Fruits');
+  data.addColumn('number', 'Count');
+        data.addRows([
+          ['Grapes', 10],
+          ['Bananas', 5],
+          ['Mangos', 15]
+        ]);
+
+  const options = {
+    'title': 'Fruits',
+    'width':500,
+    'height':400
+  };
+
+  var chart = new google.visualization.PieChart(
+      document.getElementById('chart-container'));
+  chart.draw(data, options);
+}
+
 /**
  * Adds a random greeting to the page.
  */
