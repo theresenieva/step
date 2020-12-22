@@ -5,9 +5,11 @@
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAcLlZxKd7qtaKgdkko0zMJyKzV4jImaG8"></script>
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="createMap();">
     <div id="content">
       <h1> Therese Nieva's Portfolio </h1>
 
@@ -36,6 +38,9 @@
         </select></br></br>
         <button>Submit</button>
       </form>
+
+      <h2> A Map </h2>
+      <div id="map"></div>
 
       <h2> Links </h2>
       <a href="https://au.linkedin.com/in/therese-nieva-b03056179">My LinkedIn (connect with me plez)!</a><br/>
@@ -88,5 +93,8 @@
       <button onclick="deleteComments()">Delete</button><br/>
 
     </div>
+
+    
+
   </body>
 </html>
