@@ -15,7 +15,7 @@
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
-/** Creates a chart and adds it to the page. */
+/** Fetches fruit data and uses it to create a chart. */
 function drawChart() {
   fetch('/fruit-data').then(response => response.json()).
   then((fruitVotes) => {
