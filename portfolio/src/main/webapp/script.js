@@ -115,7 +115,19 @@ function deleteComments() {
 function createMap() {
   const map = new google.maps.Map(
     document.getElementById('map'), {
-      center: { lat: 37.422, lng: -122.084}, 
-      zoom: 16,
+      center: {lat: -27.470125, lng: 153.021072}, 
+      zoom: 13,
     });
+
+  const uniMarker = new google.maps.Marker({
+    position: {lat: -27.491998032, lng: 153.007666636},
+    map: map,
+    title: 'University of Queensland'
+  });
+
+  const waffleMarker = new google.maps.Marker({
+    position: {lat: -27.4777, lng: 153.0214},
+    map: map,
+    title: 'Gelare South Bank'
+  });
 }
