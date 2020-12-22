@@ -119,9 +119,15 @@ function createMap() {
       zoom: 13,
     });
 
-  const trexMarker = new google.maps.Marker({
-    position: {lat: 37.421903, lng: -122.084674},
+  const uniMarker = new google.maps.Marker({
+    position: {lat: -27.491998032, lng: 153.007666636},
     map: map,
-    title: 'Stan the T-Rex'
+    title: 'University of Queensland'
+  });
+
+  const waffleMarker = new google.maps.Marker({
+    position: {lat: -27.4777, lng: 153.0214},
+    map: map,
+    title: 'Gelare South Bank'
   });
 }
