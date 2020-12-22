@@ -17,24 +17,25 @@ google.charts.setOnLoadCallback(drawChart);
 
 /** Creates a chart and adds it to the page. */
 function drawChart() {
-  var data = new google.visualization.DataTable();
-  data.addColumn('string', 'Fruits');
-  data.addColumn('number', 'Count');
-        data.addRows([
-          ['Grapes', 10],
-          ['Bananas', 5],
-          ['Mangos', 15]
-        ]);
+  fetch('/fruit-data').then(response => response.json()).
+  then((fruitVotes) => {
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Fruits');
+    data.addColumn('number', 'Count');
+    Object.keys(fruitVotes).forEach((fruit) => {
+      data.addRow([fruit, fruitVotes[fruit]]);
+    });
 
-  const options = {
-    'title': 'Fruits',
-    'width':500,
-    'height':400
-  };
+    const options = {
+      'title': 'Favourite Fruits',
+      'width':500,
+      'height':400
+    };
 
-  var chart = new google.visualization.PieChart(
+    var chart = new google.visualization.PieChart(
       document.getElementById('chart-container'));
-  chart.draw(data, options);
+    chart.draw(data, options);
+  });
 }
 
 /**
