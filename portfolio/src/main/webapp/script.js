@@ -17,8 +17,8 @@ google.charts.setOnLoadCallback(drawChart);
 
 /** Fetches fruit data and uses it to create a chart. */
 function drawChart() {
-  fetch('/fruit-data').then(response => response.json()).
-  then((fruitVotes) => {
+  fetch('/fruit-data').then(response => response.json())
+  .then((fruitVotes) => {
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Fruits');
     data.addColumn('number', 'Count');
