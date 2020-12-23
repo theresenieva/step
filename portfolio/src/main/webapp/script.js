@@ -126,18 +126,6 @@ function createMap() {
     addLandmark(
       map, -27.4777, 153.0214, 'Gelare South Bank',
       'Waffle Good')
-
-  /* const uniMarker = new google.maps.Marker({
-    position: {lat: -27.491998032, lng: 153.007666636},
-    map: map,
-    title: 'University of Queensland'
-  });
-
-  const waffleMarker = new google.maps.Marker({
-    position: {lat: -27.4777, lng: 153.0214},
-    map: map,
-    title: 'Gelare South Bank'
-  }); */
 }
 
 /** Adds a marker that shows an info window when clicked. */
