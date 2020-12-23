@@ -96,7 +96,7 @@ function getJson() {
 /**
  * Creates an <li> element containing text.
  */
-function createListElement(text) {
+function createListElement(comment) {
   const liElement = document.createElement('li');
   liElement.className = 'comment';
 
