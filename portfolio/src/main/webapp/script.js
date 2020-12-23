@@ -98,7 +98,21 @@ function getJson() {
  */
 function createListElement(text) {
   const liElement = document.createElement('li');
-  liElement.innerText = text;
+  liElement.className = 'comment';
+
+  const nameElement = document.createElement('span');
+  nameElement.innerText = comment.name;
+
+  const seperatorElement = document.createElement('span');
+  seperatorElement.innerText = ' commented: ';
+
+  const textElement = document.createElement('span');
+  textElement.innerText = comment.text;
+
+  liElement.appendChild(nameElement);
+  liElement.appendChild(seperatorElement)
+  liElement.appendChild(textElement);
+
   return liElement;
 }
 
