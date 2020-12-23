@@ -28,6 +28,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -50,11 +52,11 @@ public class DataServlet extends HttpServlet {
             }
         }
 
-        String json = convertMessagesToJson(messages);
+        Gson gson = new Gson();
 
         // Send the JSON as the response
         response.setContentType("application/json;");
-        response.getWriter().println(json);
+        response.getWriter().println(gson.toJson(messages));
     }
 
     @Override
@@ -74,7 +76,7 @@ public class DataServlet extends HttpServlet {
         commentEntity.setProperty("text", text);
         commentEntity.setProperty("name", name);
         commentEntity.setProperty("timestamp", timestamp);
-        
+
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);
 
