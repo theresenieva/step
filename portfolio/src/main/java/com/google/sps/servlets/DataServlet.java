@@ -61,6 +61,8 @@ public class DataServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get the input from the form.
         String text = getParameter(request, "text-input", "");
+        String name = getParameter(request, "name-input", "No Name");
+        long timestamp = System.currentTimeMillis();
         boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
       
         // Convert the text to upper case.
@@ -70,6 +72,9 @@ public class DataServlet extends HttpServlet {
 
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("text", text);
+        commentEntity.setProperty("name", name);
+        commentEntity.setProperty("timestamp", timestamp);
+        
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);
 
