@@ -28,6 +28,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -35,32 +37,41 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Query query = new Query("Comment");
+        Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
         int limit = getCommentLimit(request);
-        ArrayList<String> messages = new ArrayList<String>();
+        
+        ArrayList<Comment> messages = new ArrayList<>();
         for (Entity entity : results.asIterable()) {
+            long id = entity.getKey().getId();
+            String name = (String) entity.getProperty("name");
+            long timestamp = (long) entity.getProperty("timestamp");
             String text = (String) entity.getProperty("text");
-            messages.add(text);
+
+            Comment comment = new Comment(id, name, timestamp, text);
+            messages.add(comment);
             limit--;
             if (limit == 0) {
                 break;
             }
         }
 
-        String json = convertMessagesToJson(messages);
+        Gson gson = new Gson();
 
         // Send the JSON as the response
         response.setContentType("application/json;");
-        response.getWriter().println(json);
+        response.getWriter().println(gson.toJson(messages));
     }
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Get the input from the form.
         String text = getParameter(request, "text-input", "");
+        String name = getParameter(request, "name-input", "No Name");
+        long timestamp = System.currentTimeMillis();
         boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
       
         // Convert the text to upper case.
@@ -70,6 +81,9 @@ public class DataServlet extends HttpServlet {
 
         Entity commentEntity = new Entity("Comment");
         commentEntity.setProperty("text", text);
+        commentEntity.setProperty("name", name);
+        commentEntity.setProperty("timestamp", timestamp);
+
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         datastore.put(commentEntity);
 

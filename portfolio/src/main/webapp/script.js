@@ -84,21 +84,35 @@ function getJson() {
 
   // Add comments to the page
   fetch(('/data?limit=').concat(limit)).then(response => response.json()).then((m) => {
-    const statsListElement = document.getElementById('messages-container');
-    statsListElement.innerHTML = '';
+    const messagesListElement = document.getElementById('messages-container');
+    messagesListElement.innerHTML = '';
 
-    for (i = 0; i < m.Messages.length; i++) {
-      statsListElement.appendChild(createListElement('Comment ' + i.toString() + ': ' + m.Messages[i]));
-    }
+    m.forEach((message) => {
+      messagesListElement.appendChild(createListElement(message));
+    })
   });
 }
 
 /**
  * Creates an <li> element containing text.
  */
-function createListElement(text) {
+function createListElement(comment) {
   const liElement = document.createElement('li');
-  liElement.innerText = text;
+  liElement.className = 'comment';
+
+  const nameElement = document.createElement('span');
+  nameElement.innerText = comment.name;
+
+  const seperatorElement = document.createElement('span');
+  seperatorElement.innerText = ' commented: ';
+
+  const textElement = document.createElement('span');
+  textElement.innerText = comment.text;
+
+  liElement.appendChild(nameElement);
+  liElement.appendChild(seperatorElement)
+  liElement.appendChild(textElement);
+
   return liElement;
 }
 

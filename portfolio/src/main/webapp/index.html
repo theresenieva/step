@@ -43,7 +43,7 @@
       <div id="map"></div>
 
       <h2> Links </h2>
-      <a href="https://au.linkedin.com/in/therese-nieva-b03056179">My LinkedIn (connect with me plez)!</a><br/>
+      <a href="https://au.linkedin.com/in/therese-nieva-b03056179">My LinkedIn!</a><br/>
       <a href="https://github.com/theresenieva">My GitHub!</a>
     
       <h2> Random Images </h2>
@@ -64,9 +64,13 @@
 
         <form action="/data" method="POST">
 
+          <p>Enter Name:</p>
+          <textarea name="name-input"></textarea>
+          <br/>
+
           <p>Enter comment:</p>
           <textarea name="text-input"></textarea>
-          <br/><br/>
+          <br/>
 
           <p>Upper case?</p>
           <input type="checkbox" name="upper-case" value="true"> Upper-case
@@ -78,11 +82,10 @@
       <p> How many comments to display: </p>
       <form action="/data" method="GET">
         <select id="limit" name="limit" onchange="getJson()">
-          <option value="0">0</option>
           <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
         </select>
       </form>
 
