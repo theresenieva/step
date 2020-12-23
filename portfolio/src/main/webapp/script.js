@@ -119,15 +119,23 @@ function createMap() {
       zoom: 13,
     });
 
-  const uniMarker = new google.maps.Marker({
-    position: {lat: -27.491998032, lng: 153.007666636},
-    map: map,
-    title: 'University of Queensland'
-  });
+    addLandmark(
+      map, -27.491998032, 153.007666636, 'University of Queensland',
+      'This is where I go to University.')
 
-  const waffleMarker = new google.maps.Marker({
-    position: {lat: -27.4777, lng: 153.0214},
-    map: map,
-    title: 'Gelare South Bank'
+    addLandmark(
+      map, -27.4777, 153.0214, 'Gelare South Bank',
+      'Waffle Good')
+}
+
+/** Adds a marker that shows an info window when clicked. */
+function addLandmark(map, lat, lng, title, description) {
+  const marker = new google.maps.Marker(
+      {position: {lat: lat, lng: lng}, map: map, title: title});
+
+  const infoWindow = new google.maps.InfoWindow({content: description});
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
   });
 }
+
