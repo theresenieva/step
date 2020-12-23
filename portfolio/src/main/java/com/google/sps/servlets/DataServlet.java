@@ -38,14 +38,21 @@ public class DataServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         PreparedQuery results = datastore.prepare(query);
 
         int limit = getCommentLimit(request);
-        ArrayList<String> messages = new ArrayList<String>();
+        
+        ArrayList<Comment> messages = new ArrayList<>();
         for (Entity entity : results.asIterable()) {
+            long id = entity.getKey().getId();
+            String name = (String) entity.getProperty("name");
+            long timestamp = (long) entity.getProperty("timestamp");
             String text = (String) entity.getProperty("text");
-            messages.add(text);
+
+            Comment comment = new Comment(id, name, timestamp, text);
+            messages.add(comment);
             limit--;
             if (limit == 0) {
                 break;
