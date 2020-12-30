@@ -25,8 +25,6 @@ import java.util.Comparator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    // throw new UnsupportedOperationException("TODO: Implement this method.");
-
     List<TimeRange> freeTimes = new ArrayList<>();
     int requestedMeetingDuration = (int) request.getDuration();
 
