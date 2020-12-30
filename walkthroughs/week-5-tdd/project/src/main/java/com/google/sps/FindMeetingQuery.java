@@ -37,7 +37,8 @@ public final class FindMeetingQuery {
   }
 
   /** Return the time range of the available slots for the requested meeting */
-  private List<TimeRange> getTimeRanges(Collection<Event> events, MeetingRequest request, boolean includeOptional) {
+  private List<TimeRange> getTimeRanges(Collection<Event> events, MeetingRequest request,
+      boolean includeOptional) {
     List<TimeRange> freeTimes = new ArrayList<>();
     int requestedMeetingDuration = (int) request.getDuration();
 
@@ -64,7 +65,8 @@ public final class FindMeetingQuery {
           freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, eventStart, false));
         }
         if (eventEnd + requestedMeetingDuration < TimeRange.END_OF_DAY) {
-          freeTimes.add(TimeRange.fromStartEnd(busyTimes.get(0).end(), TimeRange.END_OF_DAY, true));
+          freeTimes.add(TimeRange.fromStartEnd(busyTimes.get(0).end(), TimeRange.END_OF_DAY,
+              true));
         } 
         return freeTimes;
     }
@@ -73,7 +75,8 @@ public final class FindMeetingQuery {
 
     // Add durations before the first event if any
     if (mergedTimes.get(0).start() - requestedMeetingDuration > TimeRange.START_OF_DAY) {
-      freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, busyTimes.get(0).start(), false));
+      freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, busyTimes.get(0).start(),
+          false));
     }
     
     for (int i = 0; i < mergedTimes.size() - 1; i++) {
@@ -86,18 +89,22 @@ public final class FindMeetingQuery {
       }
 
       int numberOfDurations = gap / requestedMeetingDuration;
-      TimeRange freeTime = TimeRange.fromStartDuration(gapStartTime, requestedMeetingDuration * numberOfDurations);
+      TimeRange freeTime = TimeRange.fromStartDuration(gapStartTime, 
+          requestedMeetingDuration * numberOfDurations);
       freeTimes.add(freeTime);
     }
     // Add durations after the last event if any
-    if (mergedTimes.get(mergedTimes.size() - 1).end() + requestedMeetingDuration < TimeRange.END_OF_DAY) {
-      freeTimes.add(TimeRange.fromStartEnd(mergedTimes.get(mergedTimes.size() - 1).end(), TimeRange.END_OF_DAY, true));
+    if (mergedTimes.get(mergedTimes.size() - 1).end() + requestedMeetingDuration < 
+        TimeRange.END_OF_DAY) {
+      freeTimes.add(TimeRange.fromStartEnd(mergedTimes.get(mergedTimes.size() - 1).end(),
+          TimeRange.END_OF_DAY, true));
     }
     return freeTimes;
   }
 
   /** Returns the time ranges of events of the meeting's attendee */
-  private List<TimeRange> getBusyTimes(Collection<Event> events, MeetingRequest request, boolean includeOptional) {
+  private List<TimeRange> getBusyTimes(Collection<Event> events, MeetingRequest request, 
+      boolean includeOptional) {
     List<TimeRange> busyTimes = new ArrayList<>();
 
     // Mandatory and optional meeting attendees
