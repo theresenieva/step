@@ -134,8 +134,8 @@ public final class FindMeetingQuery {
           
       if (thisRange.overlaps(otherRange) || thisRange.contains(otherRange)) {
         TimeRange mergedTime = TimeRange.fromStartEnd(
-        Math.min(thisRange.start(), otherRange.start()),
-        Math.max(thisRange.end(), otherRange.end()), false);
+            Math.min(thisRange.start(), otherRange.start()),
+            Math.max(thisRange.end(), otherRange.end()), false);
         mergedTimes.set(index, mergedTime);
       } else {
         index++;
