@@ -30,9 +30,9 @@ public final class FindMeetingQuery {
     List<TimeRange> withoutOptionalAttendees = getTimeRanges(events, request, false);
 
     if (withOptionalAttendees.size() > 0) {
-        return withOptionalAttendees;
+      return withOptionalAttendees;
     } else {
-        return withoutOptionalAttendees;
+      return withoutOptionalAttendees;
     }
   }
 
@@ -42,7 +42,7 @@ public final class FindMeetingQuery {
     int requestedMeetingDuration = (int) request.getDuration();
 
     if (requestedMeetingDuration > TimeRange.WHOLE_DAY.duration()) {
-        return freeTimes;
+      return freeTimes;
     }
 
     // Sort timeranges of events in ascending order by start time
@@ -51,20 +51,20 @@ public final class FindMeetingQuery {
 
     // No events
     if (busyTimes.size() == 0) {
-        freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
-        return freeTimes;
+      freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
+      return freeTimes;
     }
 
     // One event
     if (busyTimes.size() == 1) {
-        int eventStart = busyTimes.get(0).start();
-        int eventEnd = busyTimes.get(0).end();
+      int eventStart = busyTimes.get(0).start();
+      int eventEnd = busyTimes.get(0).end();
         
         if (eventStart - requestedMeetingDuration > TimeRange.START_OF_DAY) {
-            freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, eventStart, false));
+          freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, eventStart, false));
         }
         if (eventEnd + requestedMeetingDuration < TimeRange.END_OF_DAY) {
-            freeTimes.add(TimeRange.fromStartEnd(busyTimes.get(0).end(), TimeRange.END_OF_DAY, true));
+          freeTimes.add(TimeRange.fromStartEnd(busyTimes.get(0).end(), TimeRange.END_OF_DAY, true));
         } 
         return freeTimes;
     }
@@ -73,25 +73,25 @@ public final class FindMeetingQuery {
 
     // Add durations before the first event if any
     if (mergedTimes.get(0).start() - requestedMeetingDuration > TimeRange.START_OF_DAY) {
-        freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, busyTimes.get(0).start(), false));
+      freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, busyTimes.get(0).start(), false));
     }
     
     for (int i = 0; i < mergedTimes.size() - 1; i++) {
-        int gapStartTime = mergedTimes.get(i).end();
-        int gapEndTime = mergedTimes.get(i + 1).start();
-        int gap = gapEndTime - gapStartTime;
+      int gapStartTime = mergedTimes.get(i).end();
+      int gapEndTime = mergedTimes.get(i + 1).start();
+      int gap = gapEndTime - gapStartTime;
 
-        if (gap < requestedMeetingDuration) {
-            continue;
-        }
+      if (gap < requestedMeetingDuration) {
+        continue;
+      }
 
-        int numberOfDurations = gap / requestedMeetingDuration;
-        TimeRange freeTime = TimeRange.fromStartDuration(gapStartTime, requestedMeetingDuration * numberOfDurations);
-        freeTimes.add(freeTime);
+      int numberOfDurations = gap / requestedMeetingDuration;
+      TimeRange freeTime = TimeRange.fromStartDuration(gapStartTime, requestedMeetingDuration * numberOfDurations);
+      freeTimes.add(freeTime);
     }
     // Add durations after the last event if any
     if (mergedTimes.get(mergedTimes.size() - 1).end() + requestedMeetingDuration < TimeRange.END_OF_DAY) {
-        freeTimes.add(TimeRange.fromStartEnd(mergedTimes.get(mergedTimes.size() - 1).end(), TimeRange.END_OF_DAY, true));
+      freeTimes.add(TimeRange.fromStartEnd(mergedTimes.get(mergedTimes.size() - 1).end(), TimeRange.END_OF_DAY, true));
     }
     return freeTimes;
   }
@@ -108,43 +108,43 @@ public final class FindMeetingQuery {
     Collection<String> meetingAttendees = (includeOptional ? allAttendees : request.getAttendees());
     
     for (Event event : events) {
-        if (containsAny(event.getAttendees(), meetingAttendees)) {
-            busyTimes.add(event.getWhen());
-        }
+      if (containsAny(event.getAttendees(), meetingAttendees)) {
+        busyTimes.add(event.getWhen());
+      }
     }
     return busyTimes;
   }
 
   /** Merges overlapping time ranges and returns a list of the merged times */
   private List<TimeRange> getMergedTimes(List<TimeRange> busyTimes) {
-      List<TimeRange> mergedTimes = new ArrayList<>();
-      int index = 0;
-      mergedTimes.add(busyTimes.get(0));
+    List<TimeRange> mergedTimes = new ArrayList<>();
+    int index = 0;
+    mergedTimes.add(busyTimes.get(0));
 
-      for (int i = 1; i < busyTimes.size(); i++) {
-          TimeRange thisRange = mergedTimes.get(index);
-          TimeRange otherRange = busyTimes.get(i);
+    for (int i = 1; i < busyTimes.size(); i++) {
+      TimeRange thisRange = mergedTimes.get(index);
+      TimeRange otherRange = busyTimes.get(i);
           
-          if (thisRange.overlaps(otherRange) || thisRange.contains(otherRange)) {
-              TimeRange mergedTime = TimeRange.fromStartEnd(
-                  Math.min(thisRange.start(), otherRange.start()),
-                  Math.max(thisRange.end(), otherRange.end()), false);
-              mergedTimes.set(index, mergedTime);
-          } else {
-              index++;
-              mergedTimes.add(busyTimes.get(i));
-          }
+      if (thisRange.overlaps(otherRange) || thisRange.contains(otherRange)) {
+        TimeRange mergedTime = TimeRange.fromStartEnd(
+        Math.min(thisRange.start(), otherRange.start()),
+        Math.max(thisRange.end(), otherRange.end()), false);
+        mergedTimes.set(index, mergedTime);
+      } else {
+        index++;
+        mergedTimes.add(busyTimes.get(i));
       }
-      return mergedTimes;
+    }
+    return mergedTimes;
   }
 
   /** Return true if setA contains any of the elements in setB */
   private boolean containsAny(Collection<String> setA, Collection<String> setB) {
-      for (String element : setB) {
-          if (setA.contains(element)) {
-              return true;
-          }
+    for (String element : setB) {
+      if (setA.contains(element)) {
+        return true;
       }
-      return false;
+    }
+    return false;
   }
 }
