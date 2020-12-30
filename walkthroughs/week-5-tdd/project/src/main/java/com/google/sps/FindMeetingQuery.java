@@ -25,6 +25,19 @@ import java.util.Comparator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
+
+    List<TimeRange> withOptionalAttendees = getTimeRanges(events, request, true);
+    List<TimeRange> withoutOptionalAttendees = getTimeRanges(events, request, false);
+
+    if (withOptionalAttendees.size() > 0) {
+        return withOptionalAttendees;
+    } else {
+        return withoutOptionalAttendees;
+    }
+  }
+
+  /** Return the time range of the available slots for the requested meeting */
+  private List<TimeRange> getTimeRanges(Collection<Event> events, MeetingRequest request, boolean includeOptional) {
     List<TimeRange> freeTimes = new ArrayList<>();
     int requestedMeetingDuration = (int) request.getDuration();
 
@@ -33,7 +46,7 @@ public final class FindMeetingQuery {
     }
 
     // Sort timeranges of events in ascending order by start time
-    List<TimeRange> busyTimes = getBusyTimes(events, request);
+    List<TimeRange> busyTimes = getBusyTimes(events, request, includeOptional);
     Collections.sort(busyTimes, TimeRange.ORDER_BY_START);
 
     // No events
@@ -84,10 +97,18 @@ public final class FindMeetingQuery {
   }
 
   /** Returns the time ranges of events of the meeting's attendee */
-  private List<TimeRange> getBusyTimes(Collection<Event> events, MeetingRequest request) {
+  private List<TimeRange> getBusyTimes(Collection<Event> events, MeetingRequest request, boolean includeOptional) {
     List<TimeRange> busyTimes = new ArrayList<>();
+
+    // Mandatory and optional meeting attendees
+    Collection<String> allAttendees = new HashSet<>();
+    allAttendees.addAll(request.getAttendees());
+    allAttendees.addAll(request.getOptionalAttendees());
+
+    Collection<String> meetingAttendees = (includeOptional ? allAttendees : request.getAttendees());
+    
     for (Event event : events) {
-        if (containsAny(event.getAttendees(), request.getAttendees())) {
+        if (containsAny(event.getAttendees(), meetingAttendees)) {
             busyTimes.add(event.getWhen());
         }
     }
