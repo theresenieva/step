@@ -38,7 +38,7 @@ public final class FindMeetingQuery {
 
     // No events
     if (busyTimes.size() == 0) {
-        freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY + 1, false));
+        freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true));
         return freeTimes;
     }
 
@@ -51,7 +51,7 @@ public final class FindMeetingQuery {
             freeTimes.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, eventStart, false));
         }
         if (eventEnd + requestedMeetingDuration < TimeRange.END_OF_DAY) {
-            freeTimes.add(TimeRange.fromStartEnd(busyTimes.get(0).end(), TimeRange.END_OF_DAY + 1, false));
+            freeTimes.add(TimeRange.fromStartEnd(busyTimes.get(0).end(), TimeRange.END_OF_DAY, true));
         } 
         return freeTimes;
     }
@@ -78,7 +78,7 @@ public final class FindMeetingQuery {
     }
     // Add durations after the last event if any
     if (mergedTimes.get(mergedTimes.size() - 1).end() + requestedMeetingDuration < TimeRange.END_OF_DAY) {
-        freeTimes.add(TimeRange.fromStartEnd(mergedTimes.get(mergedTimes.size() - 1).end(), TimeRange.END_OF_DAY + 1, false));
+        freeTimes.add(TimeRange.fromStartEnd(mergedTimes.get(mergedTimes.size() - 1).end(), TimeRange.END_OF_DAY, true));
     }
     return freeTimes;
   }
