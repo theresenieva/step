@@ -88,9 +88,7 @@ public final class FindMeetingQuery {
         continue;
       }
 
-      int numberOfDurations = gap / requestedMeetingDuration;
-      TimeRange freeTime = TimeRange.fromStartDuration(gapStartTime, 
-          requestedMeetingDuration * numberOfDurations);
+      TimeRange freeTime = TimeRange.fromStartEnd(gapStartTime, gapEndTime, false);
       freeTimes.add(freeTime);
     }
     // Add durations after the last event if any
