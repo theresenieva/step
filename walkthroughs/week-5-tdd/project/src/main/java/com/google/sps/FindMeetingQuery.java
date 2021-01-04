@@ -105,17 +105,22 @@ public final class FindMeetingQuery {
       boolean includeOptional) {
     List<TimeRange> busyTimes = new ArrayList<>();
 
-    // Mandatory and optional meeting attendees
-    Collection<String> allAttendees = new HashSet<>();
-    allAttendees.addAll(request.getAttendees());
-    allAttendees.addAll(request.getOptionalAttendees());
-
-    Collection<String> meetingAttendees = (includeOptional ? allAttendees : request.getAttendees());
-    
-    for (Event event : events) {
-      if (containsAny(event.getAttendees(), meetingAttendees)) {
-        busyTimes.add(event.getWhen());
-      }
+    if (includeOptional) {
+        // Mandatory and optional meeting attendees
+        Collection<String> allAttendees = new HashSet<>();
+        allAttendees.addAll(request.getAttendees());
+        allAttendees.addAll(request.getOptionalAttendees());
+        for (Event event : events) {
+          if (containsAny(event.getAttendees(), allAttendees)) {
+            busyTimes.add(event.getWhen());
+          }
+        }
+    } else {
+        for (Event event : events) {
+          if (containsAny(event.getAttendees(), request.getAttendees())) {
+            busyTimes.add(event.getWhen());
+          }
+        }
     }
     return busyTimes;
   }
