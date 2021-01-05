@@ -107,7 +107,7 @@ public final class FindMeetingQuery {
 
     if (includeOptional) {
         // Mandatory and optional meeting attendees
-        Collection<String> allAttendees = new HashSet<>();
+        Set<String> allAttendees = new HashSet<>();
         allAttendees.addAll(request.getAttendees());
         allAttendees.addAll(request.getOptionalAttendees());
         for (Event event : events) {
@@ -117,7 +117,7 @@ public final class FindMeetingQuery {
         }
     } else {
         for (Event event : events) {
-          if (containsAny(event.getAttendees(), request.getAttendees())) {
+          if (containsAny(event.getAttendees(), new HashSet<String>(request.getAttendees()))) {
             busyTimes.add(event.getWhen());
           }
         }
@@ -149,7 +149,7 @@ public final class FindMeetingQuery {
   }
 
   /** Return true if setA contains any of the elements in setB */
-  private boolean containsAny(Collection<String> setA, Collection<String> setB) {
+  private boolean containsAny(Set<String> setA, Set<String> setB) {
     for (String element : setB) {
       if (setA.contains(element)) {
         return true;
